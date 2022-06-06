@@ -1,0 +1,524 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h> 
+#include <windows.h>
+
+//cores dsa letas
+#define AZUL 1
+#define VERDE 2
+#define VERDEA 3
+#define VERMELHO 4
+#define ROXO 5
+#define AMARELO 6
+#define BRANCO 7
+#define NEGRITO 8
+#define AZULC 9
+#define VERDEC 10
+#define AZULCC 11
+#define VERMELHOC 12
+////////////
+
+//cabeçalhos
+char recebe_itens();
+char inventario();
+void caveira();
+void dialogo1();
+void voz1();
+void escolha1();
+void procura_itens();
+void menu();
+
+
+
+int main(){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    setlocale(LC_ALL,"");
+    char nome [21];
+    char opcao;
+    int confirmar=0,opc=0;
+
+//------------MENU DO JOGO-----------------//
+menu();
+//historia
+voz1();
+dialogo1();
+dialogo2();
+escolha1();
+recebe_itens();
+quasemorte();
+inventario();
+decisao_de_final();
+escolha_final();
+return 0;
+}
+
+
+/// funções
+void menu(){
+    int confirmar = 0;
+    char nome[21];
+    char opcao;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    do{
+    SetConsoleTextAttribute(hConsole, AMARELO);//por cor amarela no menu
+    printf("|------------------------|\n");
+    printf("|      NOME DO JOGO      |\n");
+    printf("|------------------------|\n");
+    printf("| [J] INCIAR JOGO        |\n");
+    printf("| [T] TUTORIAL           |\n");
+    printf("| [E] SAIR DO JOGO       |\n");
+    printf("|------------------------|\n");
+
+    scanf("%c",&opcao);
+
+    setbuf(stdin,NULL);
+switch (opcao){
+case 'j':
+case 'J':
+//recebe o nome do jogador restrito as diretrizes
+system("cls");
+    do{
+    printf("DIGITE O NOME DO SEU PERSONAGEM : \n");
+    fgets(nome, 21, stdin);
+    nome[strcspn(nome,"\n")] = '\0';
+    setbuf(stdin, NULL);
+
+    do{
+    system("cls");
+
+    printf("O NOME DO SEU PERSONAGEM É : %s\n", nome);
+    printf("O SEU NOME ESTA CORRETO?\n");
+    printf(" 1 - SIM || 2 - NÃO\n");
+    scanf("%d",&confirmar);
+    setbuf(stdin,NULL);
+    }while(confirmar!=1&&confirmar!=2);
+    system("cls");
+
+}while(confirmar==2);//do while externo
+    break;
+
+
+//comandos
+case 't':
+case 'T':
+system("cls");
+    printf("|    SEJA BEM VINDO(A) AO NOME DO JOGO          |\n");
+    printf("|-----------------------------------------------|\n");
+    printf("|  O NOME DO JOGO SE BASEIA EM ESCOLHA          |\n");
+    printf("|  CONFORME O JOGO PASSAR VOCÊ RECEBE COMANDOS  |\n");
+    printf("|  BASTA ESCREVE-LOS NO TERMINAL                |\n");
+    printf("|  EXISTEM 3 FINAIS , ENTÃO BOA SORTE           |\n");
+    printf("|-----------------------------------------------|\n");
+    
+    do{
+    printf("|        1 - JOGAR || 2 - VOLTAR AO MENU       |\n");
+    scanf("%d",&confirmar);
+    setbuf(stdin, NULL);
+    }while(confirmar !=1 && confirmar!=2);
+
+    if(confirmar==1){
+                                             
+        do{                                                
+    printf("DIGITE O NOME DO SEU PERSONAGEM : \n");
+    fgets(nome, 21, stdin);
+    nome[strcspn(nome,"\n")] = '\0';
+    setbuf(stdin, NULL);
+
+    do{
+    system("cls");
+
+    printf("O NOME DO SEU PERSONAGEM É : %s\n", nome);
+    printf("O SEU NOME ESTA CORRETO?\n");
+    printf(" 1 - SIM || 2 - NÃO\n");
+    scanf("%d",&confirmar);
+    setbuf(stdin,NULL);
+    }while(confirmar!=1&&confirmar!=2);
+    setbuf(stdin, NULL);
+    system("cls");
+        
+}while(confirmar==2);
+}
+
+
+ else if (confirmar == 2){
+     system("cls");
+    menu();
+    }//if interno
+    break;
+
+
+//finaliza o jogo
+case 'e':
+case 'E':
+system("cls");
+
+    printf("OBRIGADO POR JOGAR");
+    return 0;
+    break; 
+}//menu
+//
+}while(opcao!='j'&&opcao!='t'&&opcao!='e');//do externo
+//------------------------------------------//
+
+SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);//por cor verde
+for (size_t i = 0; i < 3; i++)
+{
+printf("*\n");
+sleep(1);
+}
+printf("SEJA BEM VINDO(A) %s\n",nome);
+printf("SUA AVENTURA VAI COMEÇAR \n");
+printf("*\n");
+sleep(4);
+}//void
+void voz1(){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+printf("Você esta na sala de sua casa assistindo\n");
+sleep(2);
+printf("É de madrugada, já se passam das 3 da manhã \n");
+sleep(4);
+SetConsoleTextAttribute(hConsole, AZULC);
+printf("trimm, trimm, trimm\n");
+sleep(2);
+SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);
+printf("É seu telefone tocando\nVocê atende meio desconfiado\n");
+sleep(4);
+SetConsoleTextAttribute(hConsole, AZUL);
+printf("[???] : Você não esta sozinho\n");
+sleep(2);
+printf("[???] : ele esta na sua casa\n");
+sleep(2);
+printf("[???] : voce precisa sair dai\n");
+sleep(4);
+}
+void dialogo1(){
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    int opc;
+SetConsoleTextAttribute(hConsole, BRANCO);
+do{
+printf("\n");
+printf("|1- Quem ta falando ? |");
+printf("| 2- Quem está na minha casa ?|\n");
+scanf("%d",&opc);
+}while(opc!=1 && opc!=2);
+SetConsoleTextAttribute(hConsole, AZUL);
+if (opc==1){
+    printf("[???] : So alguém que quer te ajudar\n");
+    sleep(2);
+    printf("[???] : Procure os 2 objetos necessarios\n");
+    sleep(2);
+    printf("[???] : só assim você ira conseguir vence-lo\n");
+    sleep(2);
+    printf("[???] : maltin , talvin, nitel\n");
+    sleep(2);
+    printf("[???] : Boa sorte........\n");
+    sleep(2);
+    printf("[???] : você ira precisar\n");
+    opc=0;
+}
+else if (opc==2){
+    printf("[???] : Não é possivel pronunciar o nome dele\n ");
+    sleep(2);
+    printf("[???] : Ele é um ser de puro ódio angustia\n ");
+    sleep(2);
+    printf("[???] : E para seu azar ele acabou de aparecer na sua casa\n ");
+    sleep(2);
+    printf("[???] : Procure os 2 objetos necessarios\n ");
+    sleep(2);
+    printf("[???] : maltin , talvin, nitel\n");
+    sleep(2);
+    printf("[???] : só assim você ira conseguir vence-lo\n ");
+    sleep(2);
+    opc=0;
+}
+}
+void dialogo2(){
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);
+printf("Nesse momento o telefone desliga\n");
+sleep(2);
+printf("Derrepente você escuta um barulho na parte de cima da sua casa\n");
+sleep(2);
+printf("Você vai até a escada e escuta o barulho vindo do seu quarto\n");
+sleep(2);
+}
+void escolha1(){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    int opc;
+    SetConsoleTextAttribute(hConsole, BRANCO);
+    do{
+printf("DIGITE SUA AÇÃO\n");
+printf("|1- Subir as escadas                        |\n");
+printf("|2- Procurar os itens no andar que você esta|\n");
+scanf("%d",&opc);
+}while(opc!=1 && opc!=2);
+SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);
+if (opc==1){
+    opc = 0 ;
+    printf("Voce sobe as escadas lentamente\n");
+    sleep(2);
+    printf("Equanto você sobe, o barulho vai ficando mais alto\n");
+    sleep(2);
+    printf("Você chega no segundo andar\n");
+    sleep(2);
+    printf("Ao fundo você ve a porta do seu quarto dentre aberta\n");
+    sleep(2);
+    printf("você chega perto da porta e o barulho esta muito alto\n");
+    sleep(2);
+}//if quase morte
+else if (opc==2){
+    procura_itens();
+}
+}
+void quasemorte(){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    int opc=0;
+    SetConsoleTextAttribute(hConsole, BRANCO);
+    do{
+    printf("DIGITE SUA AÇÃO\n");
+    printf("|1- Entrar no quarto         |\n");
+    printf("|2- Voltar pro andar de baixo|\n");
+    scanf("%d",&opc);
+}while(opc!=1 && opc!=2);
+if (opc==1){
+    morte();
+}
+else if (opc==2)
+{
+    sleep(2);
+    printf("\nVOCÊ DESCE PARA O ANDAR DE BAIXO\n");
+    sleep(2);
+    escolha1();
+    quasemorte();
+}
+
+
+}
+void procura_itens(){
+    printf("VOCE COMEÇA A PROCURAR ALGO QUE POSSA SER UTIL\n");
+    sleep(2);
+    printf("ANDANDO PELOS COMODOS DO PRIMEIRO ANDAR VOCÊ ACHA OS SEGUINTE ITENS :\n");
+    sleep(2);
+    printf("->Lanterna\n->Bolacha\n->Espelho\n->faca\n->garrafa de agua\n");
+    sleep(2);
+    printf("VOCÊ PODE CARREGAR 3 ITENS\n");
+    sleep(2);
+    printf("DIGITE QUAIS VOCE DESEJA LEVAR COM VOCE :\n");
+    sleep(2);
+    
+    
+
+}
+void caveira(){
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+SetConsoleTextAttribute(hConsole, VERMELHO);
+    printf("____________________***___________________________\n");
+    printf("__________________*******_________________________\n");
+    printf("______________*********************_______________\n");
+    printf("___________*************************______________\n");
+    printf("__________**************************______________\n");
+    printf("_________***************************______________\n");
+    printf("________****************************______________\n");
+    printf("______******************************______________\n");
+    printf("_____********************************_____________\n");
+    printf("____*********************************_____________\n");
+    printf("____*********************************_____________\n");
+    printf("___**********************************_____________\n");
+    printf("___**********************************_____________\n");
+    printf("___**********************************_____________\n");
+    printf("___**********************___*********_____________\n");
+    printf("___**********************_____*******_____________\n");
+    printf("__***********************______*******____________\n");
+    printf("__********_____**********______*******____________\n");
+    printf("__*******______**********______*******____________\n");
+    printf("__******________*********______*******____________\n");
+    printf("__******_______**************_*********___________\n");
+    printf("__******_______************************___________\n");
+    printf("__******_______*******__*************_____________\n");
+    printf("__*******______*******__**********________________\n");
+    printf("__********_____*****************__________________\n");
+    printf("__******************************______**__________\n");
+    printf("___**************************_**_____****_________\n");
+    printf("___*********************__***_***____*****________\n");
+    printf("____**************__****__***_***____*****________\n");
+    printf("_______*****___***__****__***_*_______*********___\n");
+    printf("_______________***__*****_***_________*********___\n");
+    printf("______________****__*****_____________*********___\n");
+    printf("________**____****__*****____________****__***____\n");
+    printf("_______*****__****__******______**__****__________\n");
+    printf("______*******_______***_____***_**_****___________\n");
+    printf("______*******___________***_**__******____________\n");
+    printf("________****______**___****_***_*****_____________\n");
+    printf("______******_____****__****_********______________\n");
+    printf("_____*********____***__*************______________\n");
+    printf("_____************__**_**************______________\n");
+    printf("_____********************************_____________\n");
+    printf("_____*****____**********************____****______\n");
+    printf("_______**_________********************_*****______\n");
+    printf("____________________**********__************______\n");
+    printf("________________________*****_______********______\n");
+    printf("________________________***________*****__________\n");
+    printf("______________________****_________****___________\n");
+    printf("________________*********__________****___________\n");
+    printf("_______________**********_________________________\n");
+    printf("______________************________________________\n");
+    printf("______________************________________________\n");
+    printf("___________________*******________________________\n");
+    printf("____________________******________________________\n");
+    printf("____________________*****_________________________\n");
+    printf("__________________________________________________\n"); 
+    printf("--------------------FINAL RUIM--------------------\n");
+return 0;
+
+
+
+}
+void morte(){
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);
+    printf("Voce lentamente abre a porta do quarto\n");
+    sleep(2);
+    printf("Em frete á você ve um ser alto \n");
+    sleep(2);
+    printf("A face dele é tão horrenda que seu cerebro não consegue identificar\n");
+    sleep(2);
+    printf("Seu corpo trava, você não consegue se mecher\n");
+    sleep(4);
+    printf("O ser rapidamente avança  até você\n");
+    sleep(2);
+    SetConsoleTextAttribute(hConsole, VERMELHO);
+    printf("------------VOCÊ MORREU------------\n");
+    sleep(2);
+    caveira();
+}
+void decisao_de_final(){
+
+
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);
+    printf("Após você pega os itens, você anda em direção a escada\n");
+    sleep(2);
+    printf("chegando perto das escada você olha para o seu chaveiro preso na porta\n");
+    sleep(2);
+    printf("E logo ve as chaves da sua casa e do carro\n");
+    sleep(2);
+    printf("\n");
+
+}
+void escolha_final(){
+
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+int opc = 0;
+SetConsoleTextAttribute(hConsole, BRANCO);
+do{
+printf("DIGITE SUA AÇÃO\n");
+printf("|1- Subir as escadas                        |\n");
+printf("|2- Pegar as chaves e ir embora             |\n");
+scanf("%d",&opc);
+}while(opc!=1 && opc!=2);
+
+SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);
+if (opc==1){
+    opc = 0 ;
+    printf("Voce sobe as escadas lentamente\n");
+    sleep(2);
+    printf("Equanto você sobe, o barulho vai ficando mais alto\n");
+    sleep(2);
+    printf("Você chega no segundo andar\n");
+    sleep(2);
+    printf("Ao fundo você ve a porta do seu quarto dentre aberta\n");
+    sleep(2);
+    printf("você chega perto da porta e o barulho esta muito alto\n");
+    sleep(2);
+}
+else if(opc==2){
+    finalneutro();
+}
+
+}
+void finalneutro(){
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+SetConsoleTextAttribute(hConsole, VERDE | NEGRITO);
+
+    printf("Você rapidamente larga todos os outros objetos no chão\n");
+    sleep(2);
+    printf("Pega as chaves da porta e do carro\n");
+    sleep(2);
+    printf("Você sai da sua casa e vai diretamente para seu carro\n");
+    sleep(2);
+    printf("Enta em seu carro e rapidamente vai embora\n");
+    sleep(2);
+    printf("Pelo retrovisor você consegue ver uma silhueta humanoide na janela da sua casa\n");
+    sleep(2);
+    printf("Assustado e sem rumo você apenas dirige ate o amanhecer\n");
+    sleep(2);
+    printf("Mas afinal o que era aquele ser?\n");
+    sleep(2);
+    printf("Porque ele apareceu na sua casa?\n");
+    sleep(2);
+    printf("Quem te ligou no telfone?\n");
+    sleep(2);
+    printf("Bem..., só teria um jeito de responder essas perguntas\n");
+    sleep(4);
+    printf("Mas infelizmente você não ira voltar lá para descobrir\n");
+    printf("\n");
+    printf("----------FINAL NEUTRO----------");
+
+    return 0;
+}
+char recebe_itens(){
+    int opc =0;
+    int i=0;
+    char itens[3][21];
+    do{
+    for ( i = 0; i <3; i++){
+        setbuf(stdin,NULL);
+        printf("digite o item %i :\n",i+1);
+        fgets(itens[i],20,stdin);
+        itens[i][strcspn (itens[i],"\n")]='\0';
+        setbuf(stdin,NULL);
+    }
+    sleep(4);
+    printf("Você guardou os itens na sua mochila\n");
+    sleep(2);
+
+     printf("|-----INVENTARIO-----|\n");
+    for ( i = 0; i < 3; i++){
+        printf("|-%i :%s-|\n",i+1,itens[i]);
+    }
+    setbuf(stdin,NULL);
+
+    
+    do{
+        printf("deseja prosseguir com esses itens?\n");
+        printf(" 1- SIM || 2- NÃO\n");
+        scanf("%i",&opc);
+    }while(opc!=1 && opc !=2);
+    }while(opc==2);
+}
+char inventario(){
+    char itens[3][21];
+    int i=0;
+    
+   printf("|-----INVENTARIO-----|\n");
+    for ( i = 0; i < 3; i++){
+        printf("|-%i :%s-|\n",i+1,itens[i]);
+    }
+    setbuf(stdin,NULL);
+
+
+}
